@@ -29,6 +29,11 @@ openspec/
 **/compose.yaml
 deploy/
 
+# --- Removed docs / progress notes (kept on disk, out of the repo) ---
+**/progress.md
+**/README.md
+!/README.md
+
 # NOTE: conciertosFront/ and conciertosBack/ keep their own .gitignore;
 # git applies them in cascade, so build/, .gradle/, data/*.db, local.properties,
 # staging/ and reports/ stay ignored under each module.
