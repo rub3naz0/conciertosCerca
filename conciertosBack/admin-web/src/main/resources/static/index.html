@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — ConciertosCerca</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.25rem;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+      }
+      th {
+        background: #f0f0f0;
+      }
+      .fill-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .fill-form input {
+        flex: 1;
+        padding: 0.3rem;
+      }
+      .fill-form button {
+        padding: 0.3rem 0.75rem;
+        cursor: pointer;
+      }
+      .msg-ok {
+        color: green;
+        font-size: 0.85rem;
+      }
+      .msg-err {
+        color: red;
+        font-size: 0.85rem;
+      }
+      #status {
+        margin-bottom: 1rem;
+        font-style: italic;
+        color: #555;
+      }
+      .create-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 1rem;
+        max-width: 640px;
+        margin-bottom: 0.5rem;
+      }
+      .create-form label {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        gap: 0.2rem;
+      }
+      .create-form input,
+      .create-form select {
+        padding: 0.3rem;
+        font-size: 0.9rem;
+      }
+      .create-form .full-width {
+        grid-column: 1 / -1;
+      }
+      .btn-submit {
+        padding: 0.4rem 1rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .section {
+        margin-bottom: 2rem;
+      }
+      .nav {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        padding: 0.3rem 0.75rem;
+        background: #e8e8e8;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #333;
+        font-size: 0.9rem;
+      }
+      .nav a:hover {
+        background: #d0d0d0;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+      .search-box {
+        margin-bottom: 0.75rem;
+      }
+      .search-box input {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 320px;
+        box-sizing: border-box;
+      }
+      .edit-form-row td {
+        background: #f7f7f7;
+      }
+      .edit-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 1rem;
+        max-width: 640px;
+        padding: 0.75rem 0;
+      }
+      .edit-form label {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        gap: 0.2rem;
+      }
+      .edit-form input {
+        padding: 0.3rem;
+        font-size: 0.9rem;
+      }
+      .edit-form .full-width {
+        grid-column: 1 / -1;
+      }
+      .edit-form .readonly-field {
+        color: #777;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Admin — ConciertosCerca</h1>
+
+    <div class="nav">
+      <a href="#" onclick="showPanel('quality')">Data Quality</a>
+      <a href="#" onclick="showPanel('concerts')">Concerts</a>
+      <a href="#" onclick="showPanel('salas')">Create Sala</a>
+      <a href="#" onclick="showPanel('artists')">Create Artist</a>
+      <a href="#" onclick="showPanel('new-concert')">Create Concert</a>
+      <a href="#" onclick="showPanel('edit-salas')">Salas</a>
+      <a href="#" onclick="showPanel('edit-artistas')">Artistas</a>
+      <a href="#" onclick="showPanel('edit-conciertos')">Conciertos</a>
+    </div>
+
+    <!-- Data Quality panel (existing) -->
+    <div id="panel-quality" class="panel active">
+      <h2>Severe Data Quality Issues</h2>
+      <p id="status">Loading...</p>
+      <table id="issues-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Entity Type</th>
+            <th>Entity ID</th>
+            <th>Field</th>
+            <th>Status</th>
+            <th>Impact</th>
+            <th>Suggested</th>
+            <th>Score</th>
+            <th>Severity</th>
+            <th>Updated At</th>
+            <th>Fill</th>
+          </tr>
+        </thead>
+        <tbody id="issues-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Concert list panel -->
+    <div id="panel-concerts" class="panel">
+      <h2>Concerts</h2>
+      <p id="concerts-status">Loading...</p>
+      <table id="concerts-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Sala ID</th>
+            <th>Artist(s)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="concerts-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Create Sala panel -->
+    <div id="panel-salas" class="panel">
+      <h2>Create Sala</h2>
+      <div id="sala-result" class="msg-ok" style="display:none;margin-bottom:0.5rem;"></div>
+      <div id="sala-error" class="msg-err" style="display:none;margin-bottom:0.5rem;"></div>
+      <form class="create-form" onsubmit="submitSala(event)">
+        <label>Name (required) <input type="text" id="sala-name" required /></label>
+        <label>Address (required) <input type="text" id="sala-address" required /></label>
+        <label>City (required) <input type="text" id="sala-city" required /></label>
+        <label>Province (required) <input type="text" id="sala-province" required /></label>
+        <label>Lat (optional) <input type="number" id="sala-lat" step="any" /></label>
+        <label>Lng (optional) <input type="number" id="sala-lng" step="any" /></label>
+        <label>Image URL (optional) <input type="text" id="sala-image-url" /></label>
+        <label class="full-width">Description (optional)
+          <input type="text" id="sala-description" />
+        </label>
+        <div class="full-width">
+          <button type="submit" class="btn-submit">Create Sala</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Create Artist panel -->
+    <div id="panel-artists" class="panel">
+      <h2>Create Artist</h2>
+      <div id="artist-result" class="msg-ok" style="display:none;margin-bottom:0.5rem;"></div>
+      <div id="artist-error" class="msg-err" style="display:none;margin-bottom:0.5rem;"></div>
+      <form class="create-form" onsubmit="submitArtist(event)">
+        <label>Name (required) <input type="text" id="artist-name" required /></label>
+        <label>Genre (optional) <input type="text" id="artist-genre" /></label>
+        <label>Image URL (optional) <input type="text" id="artist-image-url" /></label>
+        <label>Website (optional) <input type="text" id="artist-website" /></label>
+        <label class="full-width">Description (optional)
+          <input type="text" id="artist-description" />
+        </label>
+        <div class="full-width">
+          <button type="submit" class="btn-submit">Create Artist</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Create Concert panel -->
+    <div id="panel-new-concert" class="panel">
+      <h2>Create Concert</h2>
+      <p style="font-size:0.85rem;color:#666;">
+        Sala and artist must already exist. Create them first via the respective panels.
+      </p>
+      <div id="concert-result" class="msg-ok" style="display:none;margin-bottom:0.5rem;"></div>
+      <div id="concert-error" class="msg-err" style="display:none;margin-bottom:0.5rem;"></div>
+      <form class="create-form" onsubmit="submitConcert(event)">
+        <label class="full-width">Sala (required)
+          <select id="concert-sala" required>
+            <option value="">-- select sala --</option>
+          </select>
+        </label>
+        <label class="full-width">Artist(s) (required — hold Ctrl/Cmd to select multiple)
+          <select id="concert-artists" multiple required size="6"></select>
+        </label>
+        <label>Date (required) <input type="date" id="concert-date" required /></label>
+        <label>Time (optional) <input type="text" id="concert-time" placeholder="e.g. 21:00" /></label>
+        <label>Price (optional) <input type="text" id="concert-price" /></label>
+        <div class="full-width">
+          <button type="submit" class="btn-submit">Create Concert</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Salas edit tab -->
+    <div id="panel-edit-salas" class="panel">
+      <h2>Salas</h2>
+      <div class="search-box">
+        <input type="text" id="salas-search" placeholder="Search by name or city..." oninput="filterSalas()" />
+      </div>
+      <p id="salas-status">Loading...</p>
+      <table id="salas-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Province</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="salas-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Artistas edit tab -->
+    <div id="panel-edit-artistas" class="panel">
+      <h2>Artistas</h2>
+      <div class="search-box">
+        <input type="text" id="artistas-search" placeholder="Search by name..." oninput="filterArtistas()" />
+      </div>
+      <p id="artistas-status">Loading...</p>
+      <table id="artistas-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="artistas-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Conciertos edit tab -->
+    <div id="panel-edit-conciertos" class="panel">
+      <h2>Conciertos</h2>
+      <div class="search-box">
+        <input type="text" id="conciertos-search" placeholder="Search by sala, artist, or date..." oninput="filterConciertos()" />
+      </div>
+      <p id="conciertos-status">Loading...</p>
+      <table id="conciertos-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Sala</th>
+            <th>Artist(s)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="conciertos-body"></tbody>
+      </table>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

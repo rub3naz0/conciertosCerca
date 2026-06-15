@@ -1,0 +1,21 @@
+plugins {
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+bootRun {
+    workingDir = rootProject.projectDir
+}
+
+dependencies {
+    implementation project(':shared')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.wiremock:wiremock-standalone:3.5.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}

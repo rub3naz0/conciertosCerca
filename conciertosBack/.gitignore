@@ -1,0 +1,60 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+/out/
+
+# VSCode
+.vscode/
+
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# macOS
+.DS_Store
+**/.DS_Store
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+config/application.properties
+
+# Compiled class file
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Log files
+*.log
+logs/
+
+# IDE
+.classpath
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+CLAUDE.md
+.atl
+
+# Project runtime data (SQLite db + scrape staging/reports — not versioned)
+# Patterns are unanchored so they also match per-module dirs (api/data, scraper/data)
+**/data/*.db
+**/data/*.db.*
+**/data/*.db-*
+**/data/staging/
+**/data/reports/

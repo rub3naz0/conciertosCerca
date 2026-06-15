@@ -1,0 +1,126 @@
+{
+  "data": [
+    {
+      "id": "concert_20260515-vetusta-morla-sala-sol",
+      "sala_concierto_id": "sala_sol-madrid",
+      "artist_ids": ["artist_vetusta-morla"],
+      "date": "2026-05-15",
+      "time": "21:00",
+      "price": "25€",
+      "ticket_url": "https://entradas.example.com/vetusta-morla-sol",
+      "source_url": "https://salasol.com/eventos/vetusta-morla",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260620-rozalen-razzmatazz",
+      "sala_concierto_id": "sala_razzmatazz-barcelona",
+      "artist_ids": ["artist_rozalen"],
+      "date": "2026-05-10",
+      "time": "20:30",
+      "price": "30€",
+      "ticket_url": "https://entradas.example.com/rozalen-razzmatazz",
+      "source_url": "https://www.salarazzmatazz.com/eventos/rozalen",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260625-leiva-riviera",
+      "sala_concierto_id": "sala_riviera-madrid",
+      "artist_ids": ["artist_leiva"],
+      "date": "2026-06-25",
+      "time": "21:30",
+      "price": "28€",
+      "ticket_url": "https://entradas.example.com/leiva-riviera",
+      "source_url": "https://salariviera.com/eventos/leiva",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260628-rodrigo-cuevas-kafe-antzokia",
+      "sala_concierto_id": "sala_kafe-antzokia-bilbao",
+      "artist_ids": ["artist_rodrigo-cuevas"],
+      "date": "2026-06-28",
+      "time": "20:00",
+      "price": "18€",
+      "ticket_url": null,
+      "source_url": "https://www.kafeantzokia.eus/eventos/rodrigo-cuevas",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260701-love-of-lesbian-apolo",
+      "sala_concierto_id": "sala_apolo-barcelona",
+      "artist_ids": ["artist_love-of-lesbian"],
+      "date": "2026-07-01",
+      "time": "21:00",
+      "price": "32€",
+      "ticket_url": "https://entradas.example.com/lol-apolo",
+      "source_url": "https://www.sala-apolo.com/eventos/love-of-lesbian",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260705-vetusta-morla-rozalen-razzmatazz",
+      "sala_concierto_id": "sala_razzmatazz-barcelona",
+      "artist_ids": ["artist_vetusta-morla", "artist_rozalen"],
+      "date": "2026-07-05",
+      "time": null,
+      "price": null,
+      "ticket_url": null,
+      "source_url": "https://www.salarazzmatazz.com/eventos/vetusta-morla-rozalen",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260710-arde-bogota-wizink",
+      "sala_concierto_id": "sala_wizink-center-madrid",
+      "artist_ids": ["artist_arde-bogota"],
+      "date": "2026-07-10",
+      "time": "21:00",
+      "price": "35€",
+      "ticket_url": "https://entradas.example.com/arde-bogota-wizink",
+      "source_url": "https://www.wizinkcenter.es/eventos/arde-bogota",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260715-rigoberta-bandini-bikini",
+      "sala_concierto_id": "sala_bikini-barcelona",
+      "artist_ids": ["artist_rigoberta-bandini"],
+      "date": "2026-07-15",
+      "time": "20:30",
+      "price": "22€",
+      "ticket_url": "https://entradas.example.com/rigoberta-bikini",
+      "source_url": "https://www.bikinibcn.com/eventos/rigoberta-bandini",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260720-leiva-razzmatazz",
+      "sala_concierto_id": "sala_razzmatazz-barcelona",
+      "artist_ids": ["artist_leiva"],
+      "date": "2026-07-20",
+      "time": "21:00",
+      "price": "28€",
+      "ticket_url": "https://entradas.example.com/leiva-razzmatazz",
+      "source_url": "https://www.salarazzmatazz.com/eventos/leiva",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260725-amaral-zahara-but",
+      "sala_concierto_id": "sala_but-madrid",
+      "artist_ids": ["artist_amaral", "artist_zahara"],
+      "date": "2026-07-25",
+      "time": "20:00",
+      "price": "30€",
+      "ticket_url": "https://entradas.example.com/amaral-zahara-but",
+      "source_url": "https://www.salabut.com/eventos/amaral-zahara",
+      "updated_at": "2026-05-23T18:57:49Z"
+    },
+    {
+      "id": "concert_20260802-shinova-xoel-lopez-jimmy-jazz",
+      "sala_concierto_id": "sala_jimmy-jazz-vitoria",
+      "artist_ids": ["artist_shinova", "artist_xoel-lopez"],
+      "date": "2026-08-02",
+      "time": "20:30",
+      "price": "20€",
+      "ticket_url": null,
+      "source_url": "https://www.jimmyjazzgasteiz.com/eventos/shinova-xoel-lopez",
+      "updated_at": "2026-05-23T18:57:49Z"
+    }
+  ],
+  "deleted_ids": ["concert_20260610-cancelled-event", "concert_20260620-rozalen-razzmatazz"]
+}

@@ -1,0 +1,34 @@
+# --- Node / pnpm (root tooling) ---
+node_modules/
+
+# --- Local tooling & agent state ---
+.atl/
+.pi/
+.claude/
+.codegraph/
+
+# --- OS ---
+.DS_Store
+**/.DS_Store
+
+# --- Internal planning & assets (not for the repo) ---
+/capturas/
+docs/
+openspec/
+
+# --- Root tooling / compiled artifacts (not app code) ---
+/org/
+/package.json
+/pnpm-lock.yaml
+/pnpm-workspace.yaml
+/contrato-datos.md
+/estudio-datos-back-front.md
+
+# --- Deployment (not tracked) ---
+**/Dockerfile
+**/compose.yaml
+deploy/
+
+# NOTE: conciertosFront/ and conciertosBack/ keep their own .gitignore;
+# git applies them in cascade, so build/, .gradle/, data/*.db, local.properties,
+# staging/ and reports/ stay ignored under each module.

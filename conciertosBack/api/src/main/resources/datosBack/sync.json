@@ -1,0 +1,5 @@
+{
+  "salas-concierto": { "sync": true, "last_modified": "2026-05-27T09:25:49Z" },
+  "artists": { "sync": true, "last_modified": "2026-05-23T18:57:49Z" },
+  "concerts": { "sync": true, "last_modified": "2026-05-23T19:04:03Z" }
+}

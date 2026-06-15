@@ -1,0 +1,90 @@
+[
+  {
+    "id": "artist_vetusta-morla",
+    "name": "Vetusta Morla",
+    "genre": "Indie Rock",
+    "image_url": "https://api.example.com/img/artists/vetusta-morla.jpg",
+    "website": "https://vetustamorla.com",
+    "updated_at": "2026-05-18T10:00:00Z"
+  },
+  {
+    "id": "artist_rozalen",
+    "name": "Rozalen",
+    "genre": "Pop / Folk",
+    "image_url": "https://api.example.com/img/artists/rozalen.jpg",
+    "website": "https://rozalen.com",
+    "updated_at": "2026-05-18T10:00:00Z"
+  },
+  {
+    "id": "artist_leiva",
+    "name": "Leiva",
+    "genre": "Rock",
+    "image_url": "https://api.example.com/img/artists/leiva.jpg",
+    "website": "https://leiva.com",
+    "updated_at": "2026-05-18T10:00:00Z"
+  },
+  {
+    "id": "artist_love-of-lesbian",
+    "name": "Love of Lesbian",
+    "genre": "Indie Pop",
+    "image_url": "https://api.example.com/img/artists/love-of-lesbian.jpg",
+    "website": "https://loveoflesbian.com",
+    "updated_at": "2026-05-18T10:00:00Z"
+  },
+  {
+    "id": "artist_rodrigo-cuevas",
+    "name": "Rodrigo Cuevas",
+    "genre": "Folk / Performance",
+    "image_url": "https://api.example.com/img/artists/rodrigo-cuevas.jpg",
+    "website": "https://rodrigocuevas.com",
+    "updated_at": "2026-05-19T09:00:00Z"
+  },
+  {
+    "id": "artist_arde-bogota",
+    "name": "Arde Bogota",
+    "genre": "Rock",
+    "image_url": "https://api.example.com/img/artists/arde-bogota.jpg",
+    "website": "https://ardebogota.com",
+    "updated_at": "2026-05-19T09:00:00Z"
+  },
+  {
+    "id": "artist_rigoberta-bandini",
+    "name": "Rigoberta Bandini",
+    "genre": "Pop",
+    "image_url": "https://api.example.com/img/artists/rigoberta-bandini.jpg",
+    "website": "https://rigobertabandini.com",
+    "updated_at": "2026-05-19T09:00:00Z"
+  },
+  {
+    "id": "artist_zahara",
+    "name": "Zahara",
+    "genre": "Pop / Indie",
+    "image_url": "https://api.example.com/img/artists/zahara.jpg",
+    "website": "https://zaharamusic.es",
+    "updated_at": "2026-05-19T09:00:00Z"
+  },
+  {
+    "id": "artist_amaral",
+    "name": "Amaral",
+    "genre": "Pop Rock",
+    "image_url": "https://api.example.com/img/artists/amaral.jpg",
+    "website": "https://amaral.es",
+    "updated_at": "2026-05-20T08:00:00Z"
+  },
+  {
+    "id": "artist_xoel-lopez",
+    "name": "Xoel Lopez",
+    "genre": "Indie Pop",
+    "image_url": "https://api.example.com/img/artists/xoel-lopez.jpg",
+    "website": "https://xoellopez.com",
+    "updated_at": "2026-05-20T08:00:00Z"
+  },
+  {
+    "id": "artist_shinova",
+    "name": "Shinova",
+    "genre": "Rock",
+    "image_url": "https://api.example.com/img/artists/shinova.jpg",
+    "website": "https://shinova.es",
+    "updated_at": "2026-05-20T08:00:00Z"
+  }
+]
