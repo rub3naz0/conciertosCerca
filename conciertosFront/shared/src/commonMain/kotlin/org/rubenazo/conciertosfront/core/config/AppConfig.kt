@@ -1,6 +1,10 @@
 package org.rubenazo.conciertosfront.core.config
 
 object AppConfig {
+    /**
+     * Gates the in-app debug screen (sync inspector). Keep `false` in production; flip to `true`
+     * locally to expose the debug button in [org.rubenazo.conciertosfront.ui.navigation.MainScreen].
+     */
     const val SHOW_DEBUG = false
 
     /** Single source of truth for the backend URL — both platforms resolve against this. */

@@ -20,6 +20,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Scrapes concert listings from the configured primary HTML source over a date window.
+ *
+ * The window is fetched in monthly chunks ({@code scraper.chunk-months}) to keep each request small:
+ * for each chunk it builds the search URL, fetches HTML via {@link HtmlFetchPort} (Jsoup) and parses
+ * it with {@link ConcertListParser}. Fetch failures are recorded as {@link Discrepancy} entries
+ * rather than aborting the run, so a single bad chunk doesn't lose the rest.
+ */
 @Service
 public class ConcertScraperUseCase {
 

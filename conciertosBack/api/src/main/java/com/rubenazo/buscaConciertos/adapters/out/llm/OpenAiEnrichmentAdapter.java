@@ -21,6 +21,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Out-adapter for the LLM enrichment step: takes an {@link EntityEnrichmentRequest} plus the Tavily
+ * snippets and asks OpenAI to extract structured field values, returned as an
+ * {@link EnrichedEntityResult} with a per-field confidence the use case thresholds against.
+ *
+ * Uses a JSON-schema response format so the model output is parseable, not free text. Package-private
+ * and paired with {@code LlmNoOpAdapter}; {@code LlmConfig} picks the active bean by API-key presence.
+ */
 class OpenAiEnrichmentAdapter implements EntityEnrichmentPort {
 
     private static final Logger log = LoggerFactory.getLogger(OpenAiEnrichmentAdapter.class);

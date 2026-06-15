@@ -6,6 +6,14 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Output port (driven side of the hexagon), read half: how the application reads concerts from
+ * persistence without knowing it's SQLite. The concrete {@code ConcertSqliteAdapter} implements it.
+ *
+ * Reads and writes are split into separate ports ({@link ConcertWritePort} holds the mutations), a
+ * CQRS-style boundary that lets a caller depend only on the capability it needs — e.g. a read-only
+ * query handler never sees {@code upsert}/{@code delete}.
+ */
 public interface ConcertRepositoryPort {
     List<Concert> findAll();
     List<Concert> findAllIncludingBlocked();

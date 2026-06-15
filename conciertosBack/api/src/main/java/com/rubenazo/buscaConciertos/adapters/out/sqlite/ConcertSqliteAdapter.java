@@ -16,6 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * SQLite implementation of the concert output ports, using Spring's {@link JdbcTemplate} (plain SQL,
+ * no JPA). One adapter satisfies both the read ({@link ConcertRepositoryPort}) and write
+ * ({@link ConcertWritePort}) halves. This is the only place that knows the database is SQLite; the
+ * application layer sees only the ports.
+ */
 @Component
 public class ConcertSqliteAdapter implements ConcertRepositoryPort, ConcertWritePort {
 

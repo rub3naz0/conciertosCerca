@@ -14,6 +14,19 @@ import org.rubenazo.conciertosfront.core.domain.model.SyncedConcert
 import org.rubenazo.conciertosfront.core.domain.repository.SyncRepository
 import org.rubenazo.conciertosfront.core.util.DateProvider
 
+/**
+ * Incremental, offline-first synchronization against the backend.
+ *
+ * Flow per [sync]: purge past/orphan rows, then ask the API which collections changed since the
+ * stored timestamps (the three checks run in parallel), download only those, and upsert them into
+ * Room. The per-collection `last_sync` timestamp in [SyncMetaEntity] makes every run a delta, not a
+ * full re-download. Concert writes (deletes + upserts + the artist junction) run inside a single
+ * [DatabaseProviderPort.withTransaction] so the join table can never be left inconsistent.
+ *
+ * Recovery: any [SQLiteException] from a corrupt database triggers one [DatabaseProviderPort.reset]
+ * and a single retry ([isRetry] guards against an infinite loop). Network/other failures are
+ * reported via [SyncResult.hadNetwork]/[SyncResult.errors] rather than thrown.
+ */
 class SyncRepositoryImpl(
     private val concertApi: ConcertApiClient,
     private val provider: DatabaseProviderPort,

@@ -15,6 +15,14 @@ import org.rubenazo.conciertosfront.feature.sync.SyncViewModel
 import org.rubenazo.conciertosfront.ui.navigation.MainScreen
 import org.rubenazo.conciertosfront.ui.theme.VoltageTheme
 
+/**
+ * Shared root composable for both Android and iOS.
+ *
+ * Acts as a one-way gate: while there is no usable data the user sees [SyncScreen]; once data is
+ * ready (or the user chooses to continue offline) the app switches to [MainScreen] and never goes
+ * back to the gate. The [SyncViewModel] is created here, not inside [SyncScreen], so its background
+ * refresh keeps running across the gate → Main transition.
+ */
 @Composable
 fun App() {
     KoinContext {

@@ -100,6 +100,15 @@ private fun chipLabel(startDate: String, endDate: String, today: String): String
     return "${formatShortDate(startDate)} - ${formatShortDate(endDate)}"
 }
 
+/**
+ * Main shell shown once past the sync gate: a bottom bar of [MainTab]s (Mapa / Conciertos /
+ * Artistas / Salas) plus the shared top bar with the date-range filter.
+ *
+ * Selected tab and cross-screen selections (focused artist/venue, map target, date range) are held
+ * as local composable state and threaded into each feature screen, so tab switches preserve
+ * context without a navigation library. The debug screen is reachable only when
+ * [AppConfig.SHOW_DEBUG] is enabled — disabled in production builds.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(syncResult: SyncResult?, isSyncing: Boolean = false) {

@@ -23,6 +23,15 @@ import org.rubenazo.conciertosfront.feature.mapa.MapaViewModel
 import org.rubenazo.conciertosfront.feature.salas.SalasViewModel
 import org.rubenazo.conciertosfront.feature.sync.SyncViewModel
 
+/**
+ * Koin wiring map for the shared layer: binds every domain port to its data-layer implementation
+ * and registers the feature ViewModels.
+ *
+ * `single<Port> { Impl(...) }` is where clean architecture is enforced — callers depend on the
+ * interface, this module decides the concrete class. The platform-specific [DatabaseProviderPort]
+ * (Room driver, file path) is supplied by [platformModule], declared `expect` and provided per
+ * target.
+ */
 val commonModule = module {
     single<ConcertApiClient> { ConcertApi(AppConfig.BASE_URL, get()) }
     single<SalaConciertoRepository> { SalaConciertoRepositoryImpl(get<DatabaseProviderPort>()) }

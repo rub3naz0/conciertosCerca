@@ -38,6 +38,15 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Ingests concerts from the secondary source (the alcalaesmusica JSON API) and merges them with the
+ * primary scraped data, mirroring {@link SyncUseCase}'s transactional, FK-safe upsert flow.
+ *
+ * The extra concern here is deduplication across sources: {@link CrossSourceMatcher} decides whether
+ * an Alcalá venue/concert already exists from the primary source before inserting, so the two feeds
+ * don't create duplicates. Venue coordinates come from {@link ReverseGeocodingPort} (lat/lng → area)
+ * since this source provides points rather than addresses.
+ */
 @Service
 public class AlcalaSyncUseCase implements AlcalaSyncInputPort {
 

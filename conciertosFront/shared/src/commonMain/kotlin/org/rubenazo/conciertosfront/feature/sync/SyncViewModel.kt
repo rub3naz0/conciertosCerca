@@ -27,6 +27,17 @@ sealed class SyncUiState {
     ) : SyncUiState()
 }
 
+/**
+ * Drives the startup sync and decides between two strategies based on whether local data exists:
+ *
+ * - **Cache-first** ([SyncRepository.hasLocalData] true): immediately emits [SyncUiState.CacheReady]
+ *   so the app is usable at once, while [backgroundSync] refreshes silently. A failed refresh never
+ *   blocks the user.
+ * - **Blocking** (fresh install, or retry from the error gate): emits [SyncUiState.Syncing] and
+ *   waits for the first payload before letting the app through.
+ *
+ * The single [uiState] flow is consumed by [App] to decide gate vs. main screen.
+ */
 class SyncViewModel(
     private val syncRepository: SyncRepository
 ) : ViewModel() {

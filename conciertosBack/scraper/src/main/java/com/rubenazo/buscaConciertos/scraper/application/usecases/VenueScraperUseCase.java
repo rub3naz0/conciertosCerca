@@ -17,6 +17,14 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Scrapes venue (sala) details from the primary HTML source. Two entry points: {@link #scrape} walks
+ * the venue listings for given provinces, while {@link #scrapeByUrls} fetches specific venue pages —
+ * the path the sync uses to resolve only the venues referenced by newly found concerts.
+ *
+ * Detail pages are parsed by {@link VenueDetailParser} (address, coordinates, etc.); fetch failures
+ * become {@link Discrepancy} entries so one unreachable venue doesn't fail the batch.
+ */
 @Service
 public class VenueScraperUseCase {
 

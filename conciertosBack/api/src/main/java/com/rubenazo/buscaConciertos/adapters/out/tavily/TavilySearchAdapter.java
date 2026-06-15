@@ -10,6 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Out-adapter for the Tavily web search API (the "chivato"): given a query it returns ranked web
+ * snippets that feed the RAG enrichment in {@link com.rubenazo.buscaConciertos.application.DataQualityUseCase}.
+ *
+ * Package-private and paired with a {@code TavilyNoOpAdapter}; {@code TavilyConfig} selects which
+ * bean is active based on whether an API key is configured, so the app runs without external creds.
+ */
 class TavilySearchAdapter implements TavilySearchPort {
 
     private final RestClient restClient;

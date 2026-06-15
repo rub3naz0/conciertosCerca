@@ -2,6 +2,11 @@ package org.rubenazo.conciertosfront.core.domain.repository
 
 import org.rubenazo.conciertosfront.core.domain.model.SyncResult
 
+/**
+ * Domain port for synchronizing remote data into the local cache. The implementation lives in the
+ * data layer ([org.rubenazo.conciertosfront.core.data.repository.SyncRepositoryImpl]); callers
+ * depend only on this contract.
+ */
 interface SyncRepository {
     suspend fun sync(): SyncResult
 

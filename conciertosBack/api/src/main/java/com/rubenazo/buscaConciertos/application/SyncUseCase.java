@@ -42,6 +42,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Orchestrates a full scrape-and-ingest run for the primary source — the heart of the backend.
+ *
+ * Runs asynchronously ({@code @Async}) under a {@code runId} whose lifecycle is tracked via
+ * {@link com.rubenazo.buscaConciertos.application.ports.out.SyncRunPort}. The pipeline (see the
+ * numbered steps in {@code doExecute}): read existing ids → scrape concerts in the date window →
+ * keep only new ones → scrape their venues → resolve each concert to a venue (creating a "partial"
+ * sala when details are missing) → enrich artists via the scraper, stubbing the rest to satisfy
+ * FKs → geocode new venues → then a single transaction does the FK-safe upsert
+ * (salas → partial salas → artists → concerts), purges past concerts, bumps sync metadata, and
+ * records data-quality issues. A post-commit {@link DataQualityCheckEvent} kicks off async
+ * RAG enrichment in {@link DataQualityUseCase}.
+ *
+ * Failures are reported by marking the run failed rather than thrown, since {@code @Async} would
+ * otherwise swallow them and leave the run stuck 'running'.
+ */
 @Service
 public class SyncUseCase implements SyncInputPort {
 

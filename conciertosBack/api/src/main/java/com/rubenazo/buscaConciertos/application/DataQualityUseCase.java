@@ -51,6 +51,18 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Auto-fills missing fields (the "data quality" pipeline) and exposes the admin review surface.
+ *
+ * Triggered async by {@link DataQualityCheckEvent} after a sync ({@link #onDataQualityCheck}): for
+ * each missing enrichable field it runs RAG — a Tavily web search ({@link TavilySearchPort}) feeds an
+ * LLM ({@link EntityEnrichmentPort}) which proposes values. Proposals scoring at or above
+ * {@code SCORE_THRESHOLD} (0.7) become {@code auto_found}; below stays {@code missing}. Concerts are
+ * never enriched; only the sala/artist fields in the {@code *_ENRICHABLE_FIELDS} sets are.
+ *
+ * Also implements {@link GeocodingAdminInputPort}: the backfill/fill-coords admin operations, plus
+ * the manual review actions ({@link #approve}, {@link #reject}, {@link #fill}, {@link #approveAll}).
+ */
 @Service
 public class DataQualityUseCase implements DataQualityInputPort, GeocodingAdminInputPort {
 

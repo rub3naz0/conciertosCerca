@@ -20,6 +20,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Enriches artists scraped from the primary source by fetching each one's concert detail page to
+ * pull extra fields (notably the description). Deduplicates by artist name and skips slugs already
+ * known via {@code existingIds}, so a sync only fetches genuinely new artists. Note this is the
+ * HTML-scraping enrichment; the LLM/RAG enrichment is a separate path in
+ * {@link com.rubenazo.buscaConciertos.application.DataQualityUseCase}.
+ */
 @Service
 public class ArtistEnrichmentUseCase {
 

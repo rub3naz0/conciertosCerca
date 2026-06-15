@@ -24,6 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Manual CRUD for salas, artists and concerts, used by the admin web to add or correct data the
+ * scrapers can't produce. Each write runs in its own transaction.
+ *
+ * Manually created entities live in a separate {@code manual-} id namespace and carry a sentinel
+ * sourceUrl, so the automated sync never overwrites or deletes them (they are "non-sticky" to the
+ * scraper). Deletes are soft ({@code markDeleted}), surfacing as 404/204 to callers.
+ */
 @Service
 public class ManualCrudUseCase implements ManualCrudInputPort {
 

@@ -15,6 +15,14 @@ import java.time.Instant;
 import java.util.Comparator;
 import java.util.Optional;
 
+/**
+ * Resolves a venue's coordinates from its name/address via external providers (Foursquare Places and
+ * LocationIQ), behind {@link VenueLookupPort} and {@link GeocodingPort}.
+ *
+ * {@link #geocodeIfNeeded} is the sync hook: it fills lat/lng only when missing, so a venue already
+ * located is left untouched. Lookups are deliberately called one-by-one from the sync loop to respect
+ * the providers' per-second rate limits.
+ */
 @Service
 public class VenueGeocodingUseCase {
 
