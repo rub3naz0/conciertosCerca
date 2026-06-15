@@ -157,10 +157,3 @@ conciertosCerca/
 │   └── config/             # application.properties.example
 └── README.md
 ```
-
----
-
-## Notas
-
-- Repositorio sin historial previo: arranca limitado a código fuente, configuración Gradle y plantillas. No se versionan artefactos de build, base de datos, datos de scraping, despliegue ni secretos.
-- La base de datos SQLite, la config de runtime y las claves externas **nunca** se suben; se generan/configuran localmente.
