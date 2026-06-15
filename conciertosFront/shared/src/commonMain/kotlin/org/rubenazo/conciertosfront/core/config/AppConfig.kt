@@ -1,7 +1,7 @@
 package org.rubenazo.conciertosfront.core.config
 
 object AppConfig {
-    const val SHOW_DEBUG = true
+    const val SHOW_DEBUG = false
 
     /** Single source of truth for the backend URL — both platforms resolve against this. */
     const val PRODUCTION_BASE_URL = "https://api.conciertoscerca.es"

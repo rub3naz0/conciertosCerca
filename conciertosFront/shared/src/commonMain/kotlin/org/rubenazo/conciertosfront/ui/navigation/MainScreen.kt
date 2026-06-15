@@ -67,6 +67,7 @@ import org.rubenazo.conciertosfront.feature.mapa.MapaScreen
 import org.rubenazo.conciertosfront.core.util.SpanishLocale
 import org.rubenazo.conciertosfront.core.util.epochMillisToIsoDate
 import org.rubenazo.conciertosfront.core.util.todayIsoDate
+import org.rubenazo.conciertosfront.core.config.AppConfig
 import org.rubenazo.conciertosfront.core.map.LatLng
 import org.rubenazo.conciertosfront.feature.conciertos.ConcertDetailScreen
 import org.rubenazo.conciertosfront.feature.conciertos.ConcertosScreen
@@ -218,8 +219,9 @@ fun MainScreen(syncResult: SyncResult?, isSyncing: Boolean = false) {
                                     color = MaterialTheme.colorScheme.primary,
                                 )
                             }
-                            // DEBUG: comentar esta línea para ocultar en producción
-                            IconButton(onClick = { showDebug = !showDebug }) { Icon(Icons.Default.Build, contentDescription = "Debug") }
+                            if (AppConfig.SHOW_DEBUG) {
+                                IconButton(onClick = { showDebug = !showDebug }) { Icon(Icons.Default.Build, contentDescription = "Debug") }
+                            }
                             AssistChip(
                                 onClick = { showDatePicker = true },
                                 label = {
