@@ -28,15 +28,24 @@ El repositorio es un **monorepo** con dos proyectos independientes:
 
 ---
 
-## conciertosFront — App móvil
+## conciertosFront — App móvil (ConciertosCerca)
 
-App de **Kotlin Multiplatform** con UI compartida en **Compose Multiplatform**, corriendo en Android e iOS desde el mismo código.
+**ConciertosCerca** es una app de **Kotlin Multiplatform** con UI compartida en **Compose Multiplatform**, corriendo en Android e iOS desde el mismo código.
 
-### Funcionalidades
-- Mapa de conciertos con **MapLibre** (marcadores numerados por sala).
-- Listado de conciertos con **filtro por fecha** y pantalla de detalle.
-- Pantallas de artistas y salas.
-- Sincronización delta contra el backend con recuperación automática de la base local.
+### Navegación (4 tabs)
+La pantalla principal usa una `NavigationBar` con cuatro pestañas:
+
+| Tab | Contenido |
+|-----|-----------|
+| **MAPA** | Mapa de conciertos con **MapLibre** (marcadores numerados por sala) |
+| **CONCIERTOS** | Listado de conciertos, con detalle deslizable |
+| **ARTISTAS** | Conciertos agrupados por artista |
+| **SALAS** | Conciertos agrupados por sala (con salto al mapa) |
+
+Una **top bar** compartida muestra el logo + nombre, un indicador de sincronización en segundo plano y un **filtro de rango de fechas** (chip `HOY` / rango) que afecta a las cuatro pestañas. El detalle de concierto se abre como hoja deslizable y permite navegar de forma cruzada al artista o a la sala.
+
+### Sincronización
+Sincronización delta contra el backend (`?since=`) en modo *cache-first*, con recuperación automática de la base local.
 
 ### Stack
 - **Kotlin** 2.3.21 · **Compose Multiplatform** 1.11.0
