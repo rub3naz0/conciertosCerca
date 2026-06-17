@@ -84,7 +84,7 @@ public class AdminCrudWebApi {
             if (province != null) body.put("province", province);
             if (lat != null && !lat.isBlank()) body.put("lat", Double.parseDouble(lat));
             if (lng != null && !lng.isBlank()) body.put("lng", Double.parseDouble(lng));
-            if (imageUrl != null) body.put("imageUrl", imageUrl);
+            if (imageUrl != null) body.put("image_url", imageUrl);
             if (description != null) body.put("description", description);
 
             SalaConciertoProxyDto result = proxyPort.createSala(body);
@@ -110,7 +110,7 @@ public class AdminCrudWebApi {
             Map<String, Object> body = new HashMap<>();
             body.put("name", name);
             if (genre != null) body.put("genre", genre);
-            if (imageUrl != null) body.put("imageUrl", imageUrl);
+            if (imageUrl != null) body.put("image_url", imageUrl);
             if (website != null) body.put("website", website);
             if (description != null) body.put("description", description);
 
@@ -206,7 +206,7 @@ public class AdminCrudWebApi {
             if (province != null) body.put("province", province);
             if (lat != null && !lat.isBlank()) body.put("lat", Double.parseDouble(lat));
             if (lng != null && !lng.isBlank()) body.put("lng", Double.parseDouble(lng));
-            if (imageUrl != null) body.put("imageUrl", imageUrl);
+            if (imageUrl != null) body.put("image_url", imageUrl);
             if (description != null) body.put("description", description);
 
             SalaConciertoProxyDto result = proxyPort.updateSala(id, body);
@@ -230,7 +230,7 @@ public class AdminCrudWebApi {
             Map<String, Object> body = new HashMap<>();
             body.put("name", name);
             if (genre != null) body.put("genre", genre);
-            if (imageUrl != null) body.put("imageUrl", imageUrl);
+            if (imageUrl != null) body.put("image_url", imageUrl);
             if (description != null) body.put("description", description);
 
             ArtistProxyDto result = proxyPort.updateArtist(id, body);

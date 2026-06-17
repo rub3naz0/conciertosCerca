@@ -6,6 +6,7 @@ import com.rubenazo.buscaConciertos.adminweb.adapters.out.dto.SalaConciertoProxy
 import com.rubenazo.buscaConciertos.adminweb.application.ports.out.AdminCrudProxyPort;
 import com.rubenazo.buscaConciertos.adminweb.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -358,5 +360,86 @@ class AdminCrudWebApiTest {
                 .param("date", "2026-08-02"))
             .andExpect(status().isOk())
             .andExpect(content().string(org.hamcrest.Matchers.containsString("salaConciertoId does not match")));
+    }
+
+    // --- image_url contract: admin-web must forward the api's snake_case key ---
+    // The api request DTOs map @JsonProperty("image_url") and ignore unknown fields,
+    // so a camelCase "imageUrl" key would be silently dropped (200 OK, image never saved).
+
+    @SuppressWarnings("unchecked")
+    private static ArgumentCaptor<Map<String, Object>> bodyCaptor() {
+        return ArgumentCaptor.forClass(Map.class);
+    }
+
+    @Test
+    void createArtist_forwardsImageUnderSnakeCaseKey() throws Exception {
+        when(proxyPort.createArtist(any())).thenReturn(ARTIST_DTO);
+
+        mockMvc.perform(adminPost("/admin/artists")
+                .with(httpBasic("admin", "testpass"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "Foo Artist")
+                .param("imageUrl", "https://example.com/a.jpg"))
+            .andExpect(status().is3xxRedirection());
+
+        ArgumentCaptor<Map<String, Object>> captor = bodyCaptor();
+        org.mockito.Mockito.verify(proxyPort).createArtist(captor.capture());
+        assertThat(captor.getValue())
+            .containsEntry("image_url", "https://example.com/a.jpg")
+            .doesNotContainKey("imageUrl");
+    }
+
+    @Test
+    void updateArtist_forwardsImageUnderSnakeCaseKey() throws Exception {
+        when(proxyPort.updateArtist(eq("manual-artist-foo"), any())).thenReturn(ARTIST_DTO);
+
+        mockMvc.perform(adminPut("/admin/artists/manual-artist-foo")
+                .with(httpBasic("admin", "testpass"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "Foo Artist")
+                .param("imageUrl", "https://example.com/a.jpg"))
+            .andExpect(status().isOk());
+
+        ArgumentCaptor<Map<String, Object>> captor = bodyCaptor();
+        org.mockito.Mockito.verify(proxyPort).updateArtist(eq("manual-artist-foo"), captor.capture());
+        assertThat(captor.getValue())
+            .containsEntry("image_url", "https://example.com/a.jpg")
+            .doesNotContainKey("imageUrl");
+    }
+
+    @Test
+    void createSala_forwardsImageUnderSnakeCaseKey() throws Exception {
+        when(proxyPort.createSala(any())).thenReturn(SALA_DTO);
+
+        mockMvc.perform(adminPost("/admin/salas")
+                .with(httpBasic("admin", "testpass"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "Test Sala")
+                .param("imageUrl", "https://example.com/s.jpg"))
+            .andExpect(status().is3xxRedirection());
+
+        ArgumentCaptor<Map<String, Object>> captor = bodyCaptor();
+        org.mockito.Mockito.verify(proxyPort).createSala(captor.capture());
+        assertThat(captor.getValue())
+            .containsEntry("image_url", "https://example.com/s.jpg")
+            .doesNotContainKey("imageUrl");
+    }
+
+    @Test
+    void updateSala_forwardsImageUnderSnakeCaseKey() throws Exception {
+        when(proxyPort.updateSala(eq("manual-sala-test"), any())).thenReturn(SALA_DTO);
+
+        mockMvc.perform(adminPut("/admin/salas/manual-sala-test")
+                .with(httpBasic("admin", "testpass"))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("name", "Test Sala")
+                .param("imageUrl", "https://example.com/s.jpg"))
+            .andExpect(status().isOk());
+
+        ArgumentCaptor<Map<String, Object>> captor = bodyCaptor();
+        org.mockito.Mockito.verify(proxyPort).updateSala(eq("manual-sala-test"), captor.capture());
+        assertThat(captor.getValue())
+            .containsEntry("image_url", "https://example.com/s.jpg")
+            .doesNotContainKey("imageUrl");
     }
 }
