@@ -57,7 +57,6 @@ fun SyncScreen(
 
                 is SyncUiState.Error ->
                     ErrorCard(
-                        message = state.message,
                         onContinueOffline = onContinueOffline,
                         onRetry = { viewModel.startSync() }
                     )

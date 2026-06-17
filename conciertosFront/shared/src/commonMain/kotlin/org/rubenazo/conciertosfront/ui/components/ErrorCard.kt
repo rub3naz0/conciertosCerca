@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ErrorCard(
-    message: String,
     onContinueOffline: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
@@ -41,7 +40,7 @@ fun ErrorCard(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Debería tener datos para descargar conciertos nuevos..." + message,
+                text = "No se pudieron descargar los conciertos nuevos. Revisa tu conexión e inténtalo de nuevo.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer
             )
