@@ -28,6 +28,24 @@ El repositorio es un **monorepo** con dos proyectos independientes:
 
 ---
 
+## Funcionalidades principales
+
+**App móvil (conciertosFront)**
+- Descubrimiento de conciertos cercanos en **mapa** (MapLibre, marcadores por sala) y en **listado** con detalle deslizable.
+- Navegación cruzada entre concierto, **artista** y **sala** desde el detalle.
+- **Filtro por rango de fechas** (chip `HOY` / rango) aplicado a las cuatro pestañas.
+- **Modo offline / cache-first**: la UI lee de la base local (Room/SQLite) y refresca en segundo plano.
+- **Sincronización delta** (`?since=`) contra el backend, con recuperación automática de la base local.
+
+**Backend (conciertosBack)**
+- **Scraping** automático de fuentes (conciertos.club, alcalaesmusica.org) con parseo de HTML.
+- **Enriquecimiento de datos**: geocoding de salas (Foursquare + LocationIQ) y relleno de texto vía LLM (Tavily + OpenAI).
+- **Sync programado** dentro de la app (`@Scheduled`), semanal por defecto y configurable.
+- **API de solo lectura** para la app (delta sync) y **API de administración** protegido con Basic auth.
+- **Panel de administración web** para revisión humana de calidad de datos y CRUD manual de salas/artistas/conciertos.
+
+---
+
 ## conciertosFront — App móvil (ConciertosCerca)
 
 **ConciertosCerca** es una app de **Kotlin Multiplatform** con UI compartida en **Compose Multiplatform**, corriendo en Android e iOS desde el mismo código.
