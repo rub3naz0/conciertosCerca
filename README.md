@@ -46,6 +46,53 @@ El repositorio es un **monorepo** con dos proyectos independientes:
 
 ---
 
+## Quick start
+
+Pasos mínimos para clonar y arrancar. Elige qué necesitas ejecutar.
+
+### 1. Clonar
+```bash
+git clone <repo-url> conciertosCerca
+cd conciertosCerca
+```
+
+### 2. App móvil (Android) — apunta a producción por defecto
+La app resuelve el backend contra `https://api.conciertoscerca.es` automáticamente (`AppConfig.PRODUCTION_BASE_URL`), así que **no necesitas backend local** para probarla.
+
+Único requisito: crear `conciertosFront/local.properties` (no versionado) con la ruta de tu SDK de Android:
+```bash
+echo "sdk.dir=/ruta/a/tu/Android/sdk" > conciertosFront/local.properties
+```
+Luego, con un emulador o dispositivo conectado:
+```bash
+cd conciertosFront
+./gradlew :androidApp:installDebug
+```
+> iOS requiere **Mac + Xcode**: abre `iosApp/iosApp.xcodeproj` y ejecuta.
+
+### 3. Backend — opcional, solo si quieres servir/scrapear en local
+El backend **arranca sin configuración** (`spring.config.import` usa `optional:`), creando la base SQLite al vuelo. Las integraciones externas sin API key caen a un adaptador `NoOp*`, así que no rompen el arranque:
+```bash
+cd conciertosBack
+./gradlew bootRun            # api en :8080
+```
+Para una instancia **funcional** (scraping real, credenciales de admin, geocoding/LLM), copia la plantilla y rellena tus valores:
+```bash
+cp config/application.properties.example config/application.properties
+# edita config/application.properties: cambia app.admin.password (viene como CHANGE_ME)
+```
+
+### Resumen de requisitos
+
+| Quiero ejecutar… | Requisito mínimo |
+|---|---|
+| App Android (contra prod) | `local.properties` con `sdk.dir` |
+| App iOS | Mac + Xcode + `local.properties` |
+| Backend que arranca | Nada (config es opcional) |
+| Backend funcional (scraping/admin) | Copiar y rellenar `application.properties` |
+
+---
+
 ## conciertosFront — App móvil (ConciertosCerca)
 
 **ConciertosCerca** es una app de **Kotlin Multiplatform** con UI compartida en **Compose Multiplatform**, corriendo en Android e iOS desde el mismo código.
