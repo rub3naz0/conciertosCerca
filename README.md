@@ -211,7 +211,18 @@ mkdir -p data
 - Copiar `config/application.properties` es **obligatorio**: sin él no hay `spring.datasource.url` y el arranque falla con *"Failed to configure a DataSource"*.
 - Las **API keys externas** (Tavily, OpenAI, LocationIQ, Foursquare) sí son opcionales: si faltan, se activa el adaptador `NoOp*` correspondiente y esa integración queda deshabilitada sin romper el arranque.
 
-> ⚠️ **Seguridad**: cambia `app.admin.password` (en la plantilla está como `CHANGE_ME`). Los endpoints `/api/admin/**` requieren HTTP Basic auth.
+### Acceso al panel de administración
+El panel (`:8081`) y los endpoints `/api/admin/**` están protegidos con HTTP Basic auth. Credenciales locales (en tu `config/application.properties`):
+- **Usuario**: `admin` (valor por defecto en `app.admin.username`).
+- **Contraseña**: la que definas en `app.admin.password`.
+
+En el navegador, abre `http://localhost:8081/` y el propio navegador te pedirá usuario y contraseña. Por línea de comandos, pásalas con `-u`:
+```bash
+curl -u admin:TU_PASSWORD http://localhost:8081/
+```
+La API pública (`:8080`, `/api/v1/**`) que consume la app móvil **no** requiere auth.
+
+> ⚠️ **Seguridad**: cambia `app.admin.password` (en la plantilla está como `CHANGE_ME`) antes de exponer nada. Esta contraseña es **solo para tu instancia local**: `config/application.properties` no está versionado, así que nunca se sube al repo. Producción usa sus propias credenciales, inyectadas por separado en el servidor. **Nunca** escribas una contraseña real en el README ni en ningún fichero versionado.
 
 ---
 
