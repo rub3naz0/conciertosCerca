@@ -52,7 +52,7 @@ Pasos mínimos para clonar y arrancar. Elige qué necesitas ejecutar.
 
 ### 1. Clonar
 ```bash
-git clone <repo-url> conciertosCerca
+git clone https://github.com/rub3naz0/conciertosCerca.git
 cd conciertosCerca
 ```
 
@@ -70,16 +70,26 @@ cd conciertosFront
 ```
 > iOS requiere **Mac + Xcode**: abre `iosApp/iosApp.xcodeproj` y ejecuta.
 
-### 3. Backend — opcional, solo si quieres servir/scrapear en local
-El backend **arranca sin configuración** (`spring.config.import` usa `optional:`), creando la base SQLite al vuelo. Las integraciones externas sin API key caen a un adaptador `NoOp*`, así que no rompen el arranque:
+### 3. Backend — solo si quieres servir/scrapear en local
+El backend necesita config y un directorio de datos para arrancar. Pasos mínimos:
 ```bash
 cd conciertosBack
-./gradlew bootRun            # api en :8080
-```
-Para una instancia **funcional** (scraping real, credenciales de admin, geocoding/LLM), copia la plantilla y rellena tus valores:
-```bash
+
+# a) Config: el datasource y las credenciales admin viven aquí (obligatorio)
 cp config/application.properties.example config/application.properties
 # edita config/application.properties: cambia app.admin.password (viene como CHANGE_ME)
+
+# b) Directorio de datos (SQLite no crea el padre; bootRun resuelve rutas desde la raíz del back)
+mkdir -p data
+
+# c) Arranca SOLO el api en :8080 (no uses 'bootRun' a secas: arrastra admin-web, que requiere el api vivo)
+./gradlew :api:bootRun
+```
+Las **API keys externas** (Tavily, OpenAI, LocationIQ, Foursquare) sí son opcionales: si faltan, se activa el adaptador `NoOp*` y esa integración queda deshabilitada sin romper el arranque. Lo que **no** es opcional es copiar el `config/application.properties` (contiene `spring.datasource.url` y las credenciales admin) ni crear `data/`.
+
+Para arrancar también el panel de administración (con el api ya corriendo):
+```bash
+./gradlew :admin-web:bootRun   # :8081
 ```
 
 ### Resumen de requisitos
@@ -88,8 +98,8 @@ cp config/application.properties.example config/application.properties
 |---|---|
 | App Android (contra prod) | `local.properties` con `sdk.dir` |
 | App iOS | Mac + Xcode + `local.properties` |
-| Backend que arranca | Nada (config es opcional) |
-| Backend funcional (scraping/admin) | Copiar y rellenar `application.properties` |
+| Backend (api en :8080) | Copiar `application.properties` + `mkdir data` + `./gradlew :api:bootRun` |
+| Scraping/admin/geocoding/LLM | Lo anterior + API keys externas en `application.properties` |
 
 ---
 
@@ -177,21 +187,29 @@ Scraping de **conciertos.club** y **alcalaesmusica.org** → persistencia → re
 - Integraciones opcionales: Tavily, OpenAI, LocationIQ, Foursquare.
 
 ### Ejecutar
+Requisitos previos (una vez): copiar la config y crear el directorio de datos (ver **Configuración**).
 ```bash
 cd conciertosBack
 
 ./gradlew build                 # compilar + tests de todos los módulos
 ./gradlew test                  # solo tests
-./gradlew bootRun               # arranca api en :8080
+./gradlew :api:bootRun          # arranca api en :8080
 ./gradlew :admin-web:bootRun    # arranca admin-web en :8081 (requiere api corriendo)
 ```
+> ⚠️ Usa `:api:bootRun`, **no** `./gradlew bootRun` a secas: a nivel raíz dispara el `bootRun` de todos los módulos Spring Boot (incluido `admin-web`, que falla si el api no está vivo).
 
 ### Configuración
-La config de runtime vive en `config/application.properties` (**no versionado**). Cópiala desde la plantilla y rellena tus valores:
+Antes del primer arranque hacen falta dos cosas:
+
 ```bash
-cp conciertosBack/config/application.properties.example conciertosBack/config/application.properties
+# 1. Config de runtime (no versionada): contiene spring.datasource.url y las credenciales admin
+cp config/application.properties.example config/application.properties
+
+# 2. Directorio de datos para la BD SQLite (no se crea solo)
+mkdir -p data
 ```
-Las API keys externas son **opcionales**: si faltan, se activa el adaptador `NoOp*` correspondiente y esa integración queda deshabilitada sin romper el arranque.
+- Copiar `config/application.properties` es **obligatorio**: sin él no hay `spring.datasource.url` y el arranque falla con *"Failed to configure a DataSource"*.
+- Las **API keys externas** (Tavily, OpenAI, LocationIQ, Foursquare) sí son opcionales: si faltan, se activa el adaptador `NoOp*` correspondiente y esa integración queda deshabilitada sin romper el arranque.
 
 > ⚠️ **Seguridad**: cambia `app.admin.password` (en la plantilla está como `CHANGE_ME`). Los endpoints `/api/admin/**` requieren HTTP Basic auth.
 
