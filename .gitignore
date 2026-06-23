@@ -29,6 +29,13 @@ openspec/
 **/compose.yaml
 deploy/
 
+# --- Personal machine-recovery notes (references infra/secrets paths) ---
+/MisConfigs.md
+
+# --- Internal project walkthrough (not for the repo) ---
+/Exposición.md
+/Chuleta.md
+
 # --- Removed docs / progress notes (kept on disk, out of the repo) ---
 **/progress.md
 **/README.md
