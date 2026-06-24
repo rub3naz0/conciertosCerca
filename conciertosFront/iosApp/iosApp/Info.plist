@@ -20,5 +20,10 @@
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<!-- Opt out of iPad multitasking (Split View / Slide Over) so the app can
+	     declare portrait-only orientation. Without this, App Store validation
+	     requires all four orientations for iPad. -->
+	<key>UIRequiresFullScreen</key>
+	<true/>
 </dict>
 </plist>
