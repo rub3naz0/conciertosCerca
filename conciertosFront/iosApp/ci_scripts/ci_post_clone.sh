@@ -13,8 +13,11 @@
 set -e
 
 JDK_FEATURE_VERSION=21
-# Fixed Xcode Cloud workspace path so JAVA_HOME stays stable across build phases.
-INSTALL_DIR="/Volumes/workspace/JDK"
+# Install inside DerivedData: it is the only writable workspace location that
+# survives from the post-clone step into the xcodebuild/Gradle build phase.
+# A bare /Volumes/workspace path is wiped between steps and Gradle would then
+# report "JAVA_HOME is set to an invalid directory".
+INSTALL_DIR="${CI_DERIVED_DATA_PATH:-/Volumes/workspace/DerivedData}/JDK"
 
 case "$(uname -m)" in
   arm64) JDK_ARCH="aarch64" ;;
