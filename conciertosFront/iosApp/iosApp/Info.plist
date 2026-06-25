@@ -8,6 +8,11 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Usamos tu ubicación para mostrarte los conciertos más cercanos en el mapa.</string>
+	<!-- A bundled library references the "always" location API, so App Store
+	     validation (ITMS-90683) requires this purpose string even though the app
+	     only ever requests when-in-use authorization at runtime. -->
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Usamos tu ubicación para mostrarte los conciertos más cercanos en el mapa.</string>
 	<!-- Dev backend host. Cambiar por la IP LAN del Mac para probar en iPhone físico
 	     (misma WiFi). Sirve también para el simulador. Vacío = producción
 	     (https://api.conciertoscerca.es). -->
