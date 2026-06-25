@@ -287,9 +287,10 @@ class MapaViewModelTest {
         assertFalse(viewModel.uiState.value.showPermissionDialog)
     }
 
-    // TST-MAP-14: Dialog dismissed ("No, gracias") resolves silently for this session only
+    // TST-MAP-14: Pre-prompt always proceeds to the system request; declining happens in the OS
+    // dialog (Guideline 5.1.1(iv)). A system deny resolves silently for this session only.
     @Test
-    fun dialogDismissed_resolvesSilently() = runTest(testDispatcher) {
+    fun systemPermissionDenied_resolvesSilently() = runTest(testDispatcher) {
         backgroundScope.launch { viewModel.uiState.collect {} }
         // Prime the _concerts pipeline so combine(_baseState, _concerts) can emit
         viewModel.onBoundsChanged(CameraBounds(40.0, 41.0, -4.0, -3.0))
@@ -300,8 +301,9 @@ class MapaViewModelTest {
         advanceUntilIdle()
         assertTrue(viewModel.uiState.value.showPermissionDialog)
 
-        // User dismisses
-        viewModel.onPermissionDialogDismissed()
+        // User reads the pre-prompt and proceeds to the OS request, then denies it there
+        viewModel.onPermissionDialogAccepted()
+        viewModel.onSystemPermissionResult(granted = false)
         advanceUntilIdle()
 
         assertFalse(viewModel.uiState.value.showPermissionDialog)
@@ -311,7 +313,7 @@ class MapaViewModelTest {
         assertEquals(DEFAULT_LOCATION.lng, viewModel.uiState.value.cameraPosition.lng)
     }
 
-    // TST-MAP-15: W-01 — cross-instantiation invariant: dismiss on first launch must NOT suppress
+    // TST-MAP-15: W-01 — cross-instantiation invariant: a system deny on first launch must NOT suppress
     // the dialog on a subsequent cold launch (new VM instance with NOT_DETERMINED status).
     @Test
     fun notDetermined_onSubsequentLaunch_repromptsAgain() = runTest(testDispatcher) {
@@ -326,8 +328,9 @@ class MapaViewModelTest {
         advanceUntilIdle()
         assertTrue(vm1.uiState.value.showPermissionDialog)
 
-        // User dismisses — resolves for this session only
-        vm1.onPermissionDialogDismissed()
+        // User proceeds to the OS request and denies it — resolves for this session only
+        vm1.onPermissionDialogAccepted()
+        vm1.onSystemPermissionResult(granted = false)
         advanceUntilIdle()
         assertFalse(vm1.uiState.value.showPermissionDialog)
         assertTrue(vm1.uiState.value.userLocationResolved)

@@ -105,13 +105,6 @@ class MapaViewModel(
         _baseState.value = _baseState.value.copy(showPermissionDialog = false)
     }
 
-    fun onPermissionDialogDismissed() {
-        _baseState.value = _baseState.value.copy(
-            showPermissionDialog = false,
-            userLocationResolved = true,
-        )
-    }
-
     fun onSystemPermissionResult(granted: Boolean) {
         if (granted) {
             fetchUserLocation()

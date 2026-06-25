@@ -133,28 +133,28 @@ fun MapaScreen(
             }
 
             if (uiState.showPermissionDialog) {
+                // Informational pre-prompt: it only explains WHY we ask for location.
+                // It must never offer an exit that bypasses the system permission dialog
+                // (App Store Guideline 5.1.1(iv)). Any way of leaving this message — the
+                // button or an outside tap — proceeds to the OS request, where the user
+                // makes the actual allow/deny decision.
+                val proceedToSystemRequest = {
+                    viewModel.onPermissionDialogAccepted()
+                    permissionState.launchPermissionRequest()
+                }
                 AlertDialog(
-                    onDismissRequest = { viewModel.onPermissionDialogDismissed() },
+                    onDismissRequest = proceedToSystemRequest,
                     title = { Text("Ubicación") },
                     text = {
                         Text(
                             "Usamos tu ubicación para mostrarte los conciertos más cercanos a ti. " +
-                                "Si prefieres no compartirla, no pasa nada — te situaremos en la Puerta del Sol de Madrid."
+                                "A continuación te pediremos permiso; si prefieres no compartirla, " +
+                                "te situaremos en la Puerta del Sol de Madrid."
                         )
                     },
                     confirmButton = {
-                        TextButton(
-                            onClick = {
-                                viewModel.onPermissionDialogAccepted()
-                                permissionState.launchPermissionRequest()
-                            }
-                        ) {
-                            Text("Permitir")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { viewModel.onPermissionDialogDismissed() }) {
-                            Text("No, gracias")
+                        TextButton(onClick = proceedToSystemRequest) {
+                            Text("Continuar")
                         }
                     },
                 )
