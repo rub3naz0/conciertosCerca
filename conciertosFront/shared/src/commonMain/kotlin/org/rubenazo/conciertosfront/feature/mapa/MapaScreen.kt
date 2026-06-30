@@ -148,9 +148,10 @@ fun MapaScreen(
                     text = {
                         Text(
                             "Usamos tu ubicación para mostrarte los conciertos más cercanos a ti. " +
-                                "A continuación te pediremos permiso; si prefieres no compartirla, " +
-                                "te situaremos en la Puerta del Sol de Madrid."
-                        )
+                                "Al continuar, iOS te pedirá permiso y podrás elegir permitir " +
+                                "o no permitir desde el aviso del sistema. Si prefieres no compartirla, " +
+                                " te situaremos por defecto en la Puerta del Sol de Madrid"
+                        );
                     },
                     confirmButton = {
                         TextButton(onClick = proceedToSystemRequest) {
