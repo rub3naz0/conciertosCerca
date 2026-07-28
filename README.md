@@ -3,6 +3,7 @@
 Plataforma para descubrir conciertos cercanos: una app móvil multiplataforma (Android + iOS) que consume un backend que scrapea, enriquece y sirve la información de conciertos, salas y artistas.
 
 **Android:** https://play.google.com/store/apps/details?id=org.rubenazo.conciertosfront
+
 **IOS:** https://apps.apple.com/es/app/conciertoscerca/id6783366330 
 
 El repositorio es un **monorepo** con dos proyectos independientes:
